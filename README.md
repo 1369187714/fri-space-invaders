@@ -8,7 +8,7 @@ _Friday Class (22-2-24469)_
 | No. | Name        | Members                     | Requirements      |   
 |-----|-------------|-----------------------------|-------------------|
 | 0   | [Instructors](teams/instructors.md) | Scott Uk-Jin Lee, [Hansae Ju](https://github.com/Verssae/Verssae) | Instruct students |  
-| 5   | [team6](teams/team6.md) | [온호](https://github.com/1369187714/1369187714) | Various player ship&enemies |
+| 5   | [team6](teams/team6.md) | [온호](https://github.com/1369187714/1369187714) [wh]| Various player ship&enemies |
 
 
 ## Screenshots
