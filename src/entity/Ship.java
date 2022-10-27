@@ -28,6 +28,7 @@ public class Ship extends Entity {
 	private double SPEED, INIT_SPEED;
 
 	/** Minimum time between shots. */
+	private Cooldown shootingCooldown2;
 	private Cooldown shootingCooldown;
 	/** Time spent inactive between hits. */
 	private Cooldown destructionCooldown;
@@ -104,12 +105,25 @@ public class Ship extends Entity {
 	 *            List of bullets on screen, to add the new bullet.
 	 * @return Checks if the bullet was shot correctly.
 	 */
-	public final boolean shoot(final Set<Bullet> bullets) {
+	public final boolean shoot(final Set<Bullet> bullets, int shipshape) {
 		if (this.shootingCooldown.checkFinished()) {
 			this.shootingCooldown.reset();
-			bullets.add(BulletPool.getBullet(positionX + this.width / 2,
-					positionY, BULLET_SPEED));
+			if (shipshape == 0)
+				bullets.add(BulletPool.getBullet(positionX + this.width / 2, positionY - 6, BULLET_SPEED));
+			else {
+				bullets.add(BulletPool.getBullet(positionX + this.width - 4, positionY, BULLET_SPEED));
+				bullets.add(BulletPool.getBullet(positionX + this.width - 22, positionY, BULLET_SPEED));
+			}
 			SoundPlay.getInstance().play(SoundType.shoot);
+			return true;
+		}
+		return false;
+	}
+	public final boolean shot_2(final Set<Laser> lasers) {
+		if (this.shootingCooldown2.checkFinished()) {
+			this.shootingCooldown2.reset();
+			lasers.add(BulletPool.getCannonball(positionX + 14, positionY - 270, BOMB_SPEED));
+//			    SoundPlay.getInstance().play(SoundType.shoot);
 			return true;
 		}
 		return false;

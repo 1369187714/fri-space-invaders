@@ -13,7 +13,7 @@ public final class BulletPool {
 
 	/** Set of already created bullets. */
 	private static Set<Bullet> pool = new HashSet<Bullet>();
-
+	private static Set<Laser> Lpool = new HashSet<Laser>();
 	/**
 	 * Constructor, not called.
 	 */
@@ -50,7 +50,22 @@ public final class BulletPool {
 		}
 		return bullet;
 	}
-
+	public static Laser getCannonball(final int positionX,
+									  final int positionY, final int speed) {
+		Laser laser;
+		if (!Lpool.isEmpty()) {
+			laser = Lpool.iterator().next();
+			Lpool.remove(laser);
+			laser.setPositionX(positionX - laser.getWidth() / 2);
+			laser.setPositionY(positionY);
+			laser.setSpeed(speed);
+			laser.setSprite();
+		} else {
+			laser = new Laser(positionX, positionY, speed);
+			laser.setPositionX(positionX - laser.getWidth() / 2);
+		}
+		return laser;
+	}
 	/**
 	 * Adds one or more bullets to the list of available ones.
 	 * 
@@ -59,5 +74,8 @@ public final class BulletPool {
 	 */
 	public static void recycle(final Set<Bullet> bullet) {
 		pool.addAll(bullet);
+	}
+	public static void recycle2(final Set<Laser> laser) {
+		Lpool.addAll(laser);
 	}
 }
