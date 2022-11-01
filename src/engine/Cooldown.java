@@ -68,4 +68,8 @@ public class Cooldown {
 					+ (int) (Math.random()
 							* (this.milliseconds + this.variance));
 	}
+
+	public final int showCD() {
+		return (int)(this.time + this.duration - System.currentTimeMillis());
+	}
 }

@@ -122,7 +122,7 @@ public final class DrawManager {
 			spriteMap.put(SpriteType.ItemDrop, new boolean[9][9]);
 			spriteMap.put(SpriteType.ItemGet, new boolean[5][5]);
 			spriteMap.put(SpriteType.Shield, new boolean[13][1]);
-			spriteMap.put(SpriteType.Life, new boolean[13][13]);
+			spriteMap.put(SpriteType.Life, new boolean[7][6]);
 			spriteMap.put(SpriteType.EnemyShipdangerous, new boolean[16][7]);
 
 			fileManager.readship();//read ship파일
@@ -290,12 +290,16 @@ public final class DrawManager {
 	 *            Current lives.
 	 */
 	public void drawLives(final Screen screen, final int lives) {
-		backBufferGraphics.setFont(fontRegular);
-		backBufferGraphics.setColor(Color.white);
-		backBufferGraphics.drawString(Integer.toString(lives), 20, 25);
 		Life remainLife = new Life(0, 0);
 		for (int i = 0; i < lives; i++)
-			drawEntity(remainLife, 40 + 35 * i, 6);
+			drawEntity(remainLife, 10 + 15 * i, 8);
+	}
+
+	public void drawShotCD(final Screen screen, final Ship ship) {
+		double persent = 1/(double)ship.getShootingInterval()*(ship.getShootingInterval()-ship.getShotCD());
+		int angle = (int)(360*persent);
+		backBufferGraphics.setColor(Color.BLUE);
+		backBufferGraphics.fillArc(80, 5, 14, 14, 90, -angle);
 	}
 
 	/**

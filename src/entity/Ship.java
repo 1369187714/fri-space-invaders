@@ -114,6 +114,11 @@ public class Ship extends Entity {
 		}
 		return false;
 	}
+	// n~0
+	public final int getShotCD(){
+		int CD = this.shootingCooldown.showCD();
+		return CD < 0 ? 0 : CD;
+	}
 
 	/**
 	 * Updates status of the ship.
