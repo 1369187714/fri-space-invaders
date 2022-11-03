@@ -25,10 +25,11 @@ public class Ship extends Entity {
 	/** Speed of the bullets shot by the ship. */
 	private int BULLET_SPEED, INIT_BULLET_SPEED;
 	/** Movement of the ship for each unit of time. */
+	private int LASER_SPEED,LASING_INTERVAL;
 	private double SPEED, INIT_SPEED;
 
 	/** Minimum time between shots. */
-	private Cooldown shootingCooldown2;
+	private Cooldown lasingCooldown;
 	private Cooldown shootingCooldown;
 	/** Time spent inactive between hits. */
 	private Cooldown destructionCooldown;
@@ -57,7 +58,7 @@ public class Ship extends Entity {
         super(positionX, positionY, 13 * 2, 8 * 2, shipColor);
 
 		this.SHOOTING_INTERVAL = INIT_SHOOTING_INTERVAL = 700;
-		this.BULLET_SPEED = INIT_BULLET_SPEED = -6;
+		this.BULLET_SPEED = INIT_BULLET_SPEED = -7;
 		this.SPEED = INIT_SPEED = 3;
 		this.spriteType = SpriteType.Ship;
 		this.shootingCooldown = Core.getCooldown(SHOOTING_INTERVAL);
@@ -66,11 +67,14 @@ public class Ship extends Entity {
 	public Ship(final int positionX, final int positionY, char shipShape, Color shipColor) {
 		super(positionX, positionY, 13 * 2, 8 * 2, shipColor);
 
+		this.LASING_INTERVAL = 5000;
 		this.SHOOTING_INTERVAL = INIT_SHOOTING_INTERVAL = 650;
 		this.BULLET_SPEED = INIT_BULLET_SPEED = -8;
 		this.SPEED = INIT_SPEED = 3;
+		this.LASER_SPEED = -45;
 		this.spriteType = SpriteType.Ship;
 		this.shootingCooldown = Core.getCooldown(SHOOTING_INTERVAL);
+		this.lasingCooldown = Core.getCooldown(LASING_INTERVAL);
 		this.destructionCooldown = Core.getCooldown(1000);
 	}
 
@@ -119,18 +123,22 @@ public class Ship extends Entity {
 		}
 		return false;
 	}
-	public final boolean shot_2(final Set<Laser> lasers) {
-		if (this.shootingCooldown2.checkFinished()) {
-			this.shootingCooldown2.reset();
-			lasers.add(BulletPool.getCannonball(positionX + 14, positionY - 270, BOMB_SPEED));
-//			    SoundPlay.getInstance().play(SoundType.shoot);
+	public final boolean lasing(final Set<Laser> lasers) {
+		if (this.lasingCooldown.checkFinished()) {
+			this.lasingCooldown.reset();
+			lasers.add(BulletPool.getLaser(positionX + 12, positionY - 270, LASER_SPEED));
+			SoundPlay.getInstance().play(SoundType.lasing);
 			return true;
 		}
 		return false;
 	}
 	// n~0
-	public final int getShotCD(){
+	public final int getShootCD(){
 		int CD = this.shootingCooldown.showCD();
+		return CD < 0 ? 0 : CD;
+	}
+	public final int getLasingCD(){
+		int CD = this.lasingCooldown.showCD();
 		return CD < 0 ? 0 : CD;
 	}
 
@@ -169,6 +177,7 @@ public class Ship extends Entity {
 		return SPEED;
 	}
 	public final int getShootingInterval() {return SHOOTING_INTERVAL;}
+	public final int getLasingInterval() {return LASING_INTERVAL;}
 	public final int getBulletSpeed() {return BULLET_SPEED;}
 	public void setShootingInterval(double setshootinterval){
 		SHOOTING_INTERVAL = (int)setshootinterval;

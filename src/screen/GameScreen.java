@@ -21,7 +21,6 @@ import entity.EnemyShip;
 import entity.EnemyShipFormation;
 import entity.Entity;
 import entity.Ship;
-import engine.DrawManager;
 import entity.Shield;
 import sound.*;
 
@@ -255,7 +254,7 @@ public class GameScreen extends Screen {
 						this.bulletsShot++;
 				}
 				if (inputManager.isKeyDown(KeyEvent.VK_Q) && FileManager.getPlayerShipShape() == 2) {
-					this.ship.shot_2(this.lasers);
+					this.ship.lasing(this.lasers);
 				}
 			}
 
@@ -310,7 +309,7 @@ public class GameScreen extends Screen {
 			}
 		}
 		manageCollisions();
-		manageCollisions2();
+		manageCollisions_lasing();
 		cleanItems();
 		cleanBullets();
 		cleanLasers();
@@ -375,7 +374,8 @@ public class GameScreen extends Screen {
 		drawManager.drawLevels(this, this.level);
 		drawManager.drawScore(this, this.score);
 		drawManager.drawLives(this, this.lives);
-		drawManager.drawShotCD(this,this.ship);
+		drawManager.drawLasingCD(this, this.ship);
+		drawManager.drawShootCD(this, this.ship);
 		drawManager.drawHorizontalLine(this, SEPARATION_LINE_HEIGHT - 1);
 
 		// Countdown to game start.
@@ -426,12 +426,10 @@ public class GameScreen extends Screen {
 		Set<Laser> recyclable = new HashSet<Laser>();
 		for (Laser laser : this.lasers) {
 			laser.update();
-			if (laser.getPositionY() < SEPARATION_LINE_HEIGHT
-					|| laser.getPositionY() > this.height)
+			if (laser.getPositionY() < SEPARATION_LINE_HEIGHT)
 				recyclable.add(laser);
 		}
 		this.lasers.removeAll(recyclable);
-		BulletPool.recycle2(recyclable);
 	}
 
 	/**
@@ -500,7 +498,7 @@ public class GameScreen extends Screen {
 		this.bullets.removeAll(recyclable);
 		BulletPool.recycle(recyclable);
 	}
-	private void manageCollisions2() {
+	private void manageCollisions_lasing() {
 		Set<Laser> recyclable = new HashSet<Laser>();
 		for (Laser laser : this.lasers)
 				for (EnemyShip enemyShip : this.enemyShipFormation) {
@@ -569,7 +567,7 @@ public class GameScreen extends Screen {
 
 		return distanceX < maxDistanceX && distanceY < maxDistanceY;
 	}
-	private boolean checkCollision2(final Entity a, final Entity b) {
+	private boolean checkCollision_lasing(final Entity a, final Entity b) {
 		int centerAX = a.getPositionX() + a.getWidth() / 2;
 		int centerBX = b.getPositionX() + b.getWidth() / 2;
 		int maxDistanceX = a.getWidth() / 2 + b.getWidth() / 2;
@@ -631,7 +629,7 @@ public class GameScreen extends Screen {
 				this.clearItem();
 				this.clearPointUp();
 				this.itemInfoCooldown.reset();
-				shield = new Shield(this.ship.getPositionX(), this.ship.getPositionY() - 3, this.ship);
+				shield = new Shield(this.ship.getPositionX() - 2, this.ship.getPositionY() - 6, this.ship);
 
 			}
 			else if (item.getIsget() == false &&

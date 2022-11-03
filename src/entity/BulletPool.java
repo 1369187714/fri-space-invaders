@@ -50,7 +50,7 @@ public final class BulletPool {
 		}
 		return bullet;
 	}
-	public static Laser getCannonball(final int positionX,
+	public static Laser getLaser(final int positionX,
 									  final int positionY, final int speed) {
 		Laser laser;
 		if (!Lpool.isEmpty()) {
@@ -74,8 +74,5 @@ public final class BulletPool {
 	 */
 	public static void recycle(final Set<Bullet> bullet) {
 		pool.addAll(bullet);
-	}
-	public static void recycle2(final Set<Laser> laser) {
-		Lpool.addAll(laser);
 	}
 }

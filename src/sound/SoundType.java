@@ -3,6 +3,7 @@ package sound;
 public enum SoundType{
     mainGameBgm,
     shoot,
+    lasing,
     enemyKill,
     hit,
     gameOverBGM,

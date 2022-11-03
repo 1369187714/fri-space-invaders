@@ -22,6 +22,9 @@ public class SoundPlay{
             case shoot:
                 playEffect("Shoot_" + String.format("%03d",PermanentState.getInstance().getBulletSFX()) + ".wav");
                 break;
+            case lasing:
+                playEffect("lasing.wav");
+                break;
             case enemyKill:
                 playEffect("EnemyKill_001.wav");
                 break;
