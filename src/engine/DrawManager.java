@@ -54,8 +54,6 @@ public final class DrawManager {
 	/** Sprite types mapped to their images. */
 	private static Map<SpriteType, boolean[][]> spriteMap;
 
-	Color[] colors = {Color.gray, Color.darkGray, Color.black};
-
 	/** Sprite types. */
 	public static enum SpriteType {
 		/** Player ship. */
@@ -124,7 +122,7 @@ public final class DrawManager {
 			spriteMap.put(SpriteType.ItemDrop, new boolean[9][9]);
 			spriteMap.put(SpriteType.ItemGet, new boolean[5][5]);
 			spriteMap.put(SpriteType.Shield, new boolean[13][1]);
-			spriteMap.put(SpriteType.Life, new boolean[7][6]);
+			spriteMap.put(SpriteType.Life, new boolean[13][13]);
 			spriteMap.put(SpriteType.EnemyShipdangerous, new boolean[16][7]);
 
 			fileManager.readship();//read ship파일
@@ -179,11 +177,7 @@ public final class DrawManager {
 		graphics = frame.getGraphics();
 		backBufferGraphics = backBuffer.getGraphics();
 
-		if (GameScreen.lives <= 3 && GameScreen.lives > 0) {
-			backBufferGraphics.setColor(colors[GameScreen.lives - 1]);
-		} else {
 			backBufferGraphics.setColor(Color.BLACK);
-		}
 
 		backBufferGraphics
 				.fillRect(0, 0, screen.getWidth(), screen.getHeight());
@@ -269,18 +263,11 @@ public final class DrawManager {
 	 *            Current score.
 	 */
 	public void drawScore(final Screen screen, final int score) {
-		backBufferGraphics.setFont(fontRegular);
+		backBufferGraphics.setFont(fontBig);
 
 		backBufferGraphics.setColor(Color.cyan);
-		String scoreString = String.format("SCORE %04d", score);
-		backBufferGraphics.drawString(scoreString, screen.getWidth() - 120, 25);
-	}
-
-	public void drawLevels(final Screen screen, final int level) {
-		backBufferGraphics.setFont(fontRegular);
-		backBufferGraphics.setColor(Color.green);
-		String scoreString = String.format("Level: %02d", level);
-		backBufferGraphics.drawString(scoreString, screen.getWidth() - 255, 25);
+		String scoreString = String.format("%04d", score);
+		backBufferGraphics.drawString(scoreString, screen.getWidth() - 250, 30);
 	}
 
 	/**
@@ -294,14 +281,29 @@ public final class DrawManager {
 	public void drawLives(final Screen screen, final int lives) {
 		Life remainLife = new Life(0, 0);
 		for (int i = 0; i < lives; i++)
-			drawEntity(remainLife, 10 + 15 * i, 8);
+			drawEntity(remainLife, 45 + 30 * i, 6);
 	}
 
-	public void drawShotCD(final Screen screen, final Ship ship) {
-		double persent = 1/(double)ship.getShootingInterval()*(ship.getShootingInterval()-ship.getShotCD());
+	public void drawUAShips(final Screen screen, final int uasnums) {
+		UAShip uaShip = new UAShip(0, 0);
+		backBufferGraphics.setColor(Color.PINK);
+		for (int i = 0; i < uasnums; i++)
+			drawEntity(uaShip, 400 - 23 * i, 9);
+	}
+
+	public void drawShootCD(final Screen screen, final Ship ship) {
+		double persent = 1/(double)ship.getShootingInterval()*(ship.getShootingInterval()-ship.getShootCD());
 		int angle = (int)(360*persent);
 		backBufferGraphics.setColor(Color.BLUE);
-		backBufferGraphics.fillArc(80, 5, 14, 14, 90, -angle);
+		backBufferGraphics.fillArc(14, 9, 21, 21, 90, -angle);
+	}
+	public void drawLasingCD(final Screen screen, final Ship ship) {
+		double persent = 1/(double)ship.getLasingInterval()*(ship.getLasingInterval()-ship.getLasingCD());
+		int angle = (int)(360*persent);
+		Graphics2D g2 = (Graphics2D)backBufferGraphics;
+		g2.setColor(Color.RED);
+		g2.setStroke(new BasicStroke(4.0f));
+		g2.drawArc(13, 7, 24, 24, 90, -angle);
 	}
 
 	/**
