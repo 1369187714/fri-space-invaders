@@ -502,7 +502,7 @@ public class GameScreen extends Screen {
 		for (Laser laser : this.lasers)
 				for (EnemyShip enemyShip : this.enemyShipFormation) {
 					if (!enemyShip.isDestroyed()
-							&& checkCollision2(laser, enemyShip)) {
+							&& checkCollision_lasing(laser, enemyShip)) {
 						SoundPlay.getInstance().play(SoundType.enemyKill);
 						this.score += enemyShip.getPointValue();
 						this.shipsDestroyed++;
@@ -520,7 +520,7 @@ public class GameScreen extends Screen {
 					}
 					if (this.enemyShipSpecial != null
 							&& !this.enemyShipSpecial.isDestroyed()
-							&& checkCollision2(laser, this.enemyShipSpecial)) {
+							&& checkCollision_lasing(laser, this.enemyShipSpecial)) {
 						SoundPlay.getInstance().play(SoundType.bonusEnemyKill);
 						this.score += this.enemyShipSpecial.getPointValue();
 
@@ -531,7 +531,7 @@ public class GameScreen extends Screen {
 					}
 					if (this.enemyShipDangerous != null
 							&& !this.enemyShipDangerous.isDestroyed()
-							&& checkCollision2(laser, this.enemyShipDangerous)) {
+							&& checkCollision_lasing(laser, this.enemyShipDangerous)) {
 						SoundPlay.getInstance().play(SoundType.bonusEnemyKill);
 						this.score += this.enemyShipDangerous.getPointValue();
 						this.shipsDestroyed++;
