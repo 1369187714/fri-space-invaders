@@ -280,13 +280,6 @@ public final class DrawManager {
 			drawEntity(remainLife, 45 + 30 * i, 6);
 	}
 
-	public void drawUAShips(final Screen screen, final int uasnums) {
-		UAShip uaShip = new UAShip(0, 0);
-		backBufferGraphics.setColor(Color.PINK);
-		for (int i = 0; i < uasnums; i++)
-			drawEntity(uaShip, 400 - 23 * i, 9);
-	}
-
 	public void drawShootCD(final Screen screen, final Ship ship) {
 		double persent = 1/(double)ship.getShootingInterval()*(ship.getShootingInterval()-ship.getShootCD());
 		int angle = (int)(360*persent);
