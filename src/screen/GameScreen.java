@@ -371,7 +371,6 @@ public class GameScreen extends Screen {
 			drawManager.drawEntity(laser, laser.getPositionX(),
 					laser.getPositionY());
 		// Interface.
-		drawManager.drawLevels(this, this.level);
 		drawManager.drawScore(this, this.score);
 		drawManager.drawLives(this, this.lives);
 		drawManager.drawLasingCD(this, this.ship);
