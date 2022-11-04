@@ -30,6 +30,8 @@ public final class FileManager {
 
 	private static int playerShipShape,playerShipColor;
 
+	private static int uasnums;
+
 	private static int shipShape;
 
 	/**
@@ -463,6 +465,7 @@ public final class FileManager {
 			inputStream = DrawManager.class.getClassLoader().getResourceAsStream("ship");
 			playerShipShape = inputStream.read() - 48 - 1;
 			playerShipColor = inputStream.read() - 48 - 1;
+			uasnums = inputStream.read() - 48 - 1;
 			logger.fine("ship read.");
 			if (inputStream != null)
 				inputStream.close();
@@ -475,18 +478,44 @@ public final class FileManager {
 	public static int getPlayerShipShape() {
 		return playerShipShape;
 	}
-
 	public static void setPlayerShipShape() throws IOException {
 		FileReader fileReader = new FileReader("res/ship");
 		fileReader.read();
-		int colorNum = fileReader.read();
+		int ColorNum = fileReader.read();
 		fileReader.close();
 		FileWriter fileWriter = new FileWriter("res/ship");
 		PrintWriter printWriter = new PrintWriter(fileWriter);
 		printWriter.print(shipShape+1);
 		playerShipShape = shipShape;
-		printWriter.print(colorNum - 48);
+		printWriter.print(ColorNum - 48);
 		fileWriter.close();
+	}
+
+	public static int getUasnums(){
+		return uasnums;
+	}
+	public static void setUaShipNum(boolean isbuy) {
+		try {
+			FileReader fileReader = new FileReader("res/ship");
+			int shapeNum = fileReader.read();
+			int shipColor = fileReader.read();
+			int UaShipNum = fileReader.read();
+			fileReader.close();
+			FileWriter fileWriter = new FileWriter("res/ship");
+			PrintWriter printWriter = new PrintWriter(fileWriter);
+			printWriter.print(shapeNum - 48);
+			printWriter.print(shipColor - 48);
+			if(isbuy) {
+				printWriter.print(UaShipNum - 48 + 1);
+				uasnums = UaShipNum - 48 + 1 - 1;
+			}else {
+				printWriter.print(UaShipNum - 48 - 1);
+				uasnums = UaShipNum - 48 - 1 - 1;
+			}
+			fileWriter.close();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	public static int getPlayerShipColor() {
