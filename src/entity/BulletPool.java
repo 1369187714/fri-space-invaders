@@ -14,6 +14,7 @@ public final class BulletPool {
 	/** Set of already created bullets. */
 	private static Set<Bullet> pool = new HashSet<Bullet>();
 	private static Set<Laser> Lpool = new HashSet<Laser>();
+	private static Set<UAShip> Upool = new HashSet<UAShip>();
 	/**
 	 * Constructor, not called.
 	 */
@@ -65,6 +66,22 @@ public final class BulletPool {
 			laser.setPositionX(positionX - laser.getWidth() / 2);
 		}
 		return laser;
+	}
+
+	public static UAShip getUAShip(final int positionX,
+								 final int positionY) {
+		UAShip u;
+		if (!Upool.isEmpty()) {
+			u = Upool.iterator().next();
+			Upool.remove(u);
+			u.setPositionX(positionX - u.getWidth() / 2);
+			u.setPositionY(positionY);
+			u.setSprite();
+		} else {
+			u = new UAShip(positionX, positionY);
+			u.setPositionX(positionX - u.getWidth() / 2);
+		}
+		return u;
 	}
 	/**
 	 * Adds one or more bullets to the list of available ones.

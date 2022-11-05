@@ -2,6 +2,7 @@ package engine;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import screen.GameScreen;
 
 /**
  * Manages keyboard input for the provided screen.
@@ -57,6 +58,8 @@ public final class InputManager implements KeyListener {
 	public void keyPressed(final KeyEvent key) {
 		if (key.getKeyCode() >= 0 && key.getKeyCode() < NUM_KEYS)
 			keys[key.getKeyCode()] = true;
+		if (keys[KeyEvent.VK_UP] || keys[KeyEvent.VK_W])
+			GameScreen.isPressedUp(true);
 	}
 
 	/**
@@ -69,6 +72,11 @@ public final class InputManager implements KeyListener {
 	public void keyReleased(final KeyEvent key) {
 		if (key.getKeyCode() >= 0 && key.getKeyCode() < NUM_KEYS)
 			keys[key.getKeyCode()] = false;
+
+		if (key.getKeyCode() == KeyEvent.VK_UP || key.getKeyCode() == KeyEvent.VK_W) {
+			GameScreen.isPressedUp(false);
+			GameScreen.isReleasedUp(true);
+		}
 	}
 
 	/**

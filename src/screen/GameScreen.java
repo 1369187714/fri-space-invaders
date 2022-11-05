@@ -60,6 +60,7 @@ public class GameScreen extends Screen {
 	private EnemyShipFormation enemyShipFormation;
 	/** Player's ship. */
 	private Ship ship;
+	private Pointer pointer;
 	/** Bonus enemy ship that appears sometimes. */
 	private EnemyShip enemyShipSpecial;
 	/** Dangerous enemy ship tahat appears sometimes. */
@@ -79,6 +80,7 @@ public class GameScreen extends Screen {
 	/** Set of all bullets fired by on screen ships. */
 	private Set<Bullet> bullets;
 	private Set<Laser> lasers;
+	private Set<UAShip> uaShips;
 	/** Current score. */
 	private int score;
 	/** Player lives left. */
@@ -169,6 +171,7 @@ public class GameScreen extends Screen {
 		itemmanager.assignHasItem(enemyShipFormation);
 		enemyShipFormation.attach(this);
 		int playerShipShape = FileManager.getPlayerShipShape();
+		this.pointer = new Pointer(this.width - 6, this.height - 18, FileManager.getUasnums());
 		switch (playerShipShape) {
 			case 0:
 				this.ship = new Ship(this.width / 2, this.height - 30, FileManager.ChangeIntToColor());
@@ -197,6 +200,7 @@ public class GameScreen extends Screen {
 		this.screenFinishedCooldown = Core.getCooldown(SCREEN_CHANGE_INTERVAL);
 		this.bullets = new HashSet<Bullet>();
 		this.lasers = new HashSet<Laser>();
+		this.uaShips = new HashSet<UAShip>();
 		this.itemiterator = new HashSet<Item>();
 		// Special input delay / countdown.
 		this.gameStartTime = System.currentTimeMillis();
@@ -219,6 +223,18 @@ public class GameScreen extends Screen {
 		this.logger.info("Screen cleared with a score of " + this.score); // 정상 출력
 		return this.returnCode;
 	}
+	public static boolean moveUp = false;
+	private static boolean canLaunch = false;
+	private static boolean gameStart = false;
+	public static void isPressedUp(boolean b){
+		if(gameStart)
+			moveUp = b;
+	}
+	public static void isReleasedUp(boolean b){
+		if(gameStart)
+			canLaunch = b;
+	}
+	private static void isGameStart(){gameStart = true;}
 
 	/**
 	 * Updates the elements on screen and checks for events.
@@ -228,6 +244,7 @@ public class GameScreen extends Screen {
 
 		if (this.inputDelay.checkFinished() && !this.levelFinished) {
 
+			isGameStart();
 			if (!this.ship.isDestroyed()) {
 				boolean moveRight = inputManager.isKeyDown(KeyEvent.VK_RIGHT)
 						|| inputManager.isKeyDown(KeyEvent.VK_D);
@@ -256,6 +273,20 @@ public class GameScreen extends Screen {
 				if (inputManager.isKeyDown(KeyEvent.VK_Q) && FileManager.getPlayerShipShape() == 2) {
 					this.ship.lasing(this.lasers);
 				}
+			}
+
+			boolean isUpBorder = this.pointer.getPositionY()
+			< this.height - 440;
+			boolean isDownBorder = this.pointer.getPositionY()
+			> this.height - 20;
+
+			if (moveUp && !isUpBorder)
+				this.pointer.moveUp();
+
+			if (canLaunch) {
+				this.pointer.launch(this.uaShips);
+				pointer.resetXY();
+				canLaunch = false;
 			}
 
 			if (this.enemyShipSpecial != null) {
@@ -299,6 +330,7 @@ public class GameScreen extends Screen {
 			}
 
 			this.ship.update();
+			this.pointer.update();
 			this.enemyShipFormation.update();
 			this.enemyShipFormation.shoot(this.bullets);
 
@@ -308,11 +340,13 @@ public class GameScreen extends Screen {
 				manageGetItem(item);
 			}
 		}
+		manageCollisions3();
 		manageCollisions();
 		manageCollisions_lasing();
 		cleanItems();
 		cleanBullets();
 		cleanLasers();
+		cleanUaShips();
 		draw();
 		if ((this.enemyShipFormation.isEmpty() || this.lives == 0)
 				&& !this.levelFinished) {
@@ -342,6 +376,10 @@ public class GameScreen extends Screen {
 		}
 		drawManager.drawEntity(this.ship, this.ship.getPositionX(),
 				this.ship.getPositionY());
+
+		if(this.pointer.getUasnums() > 0)
+			drawManager.drawEntity(this.pointer, this.pointer.getPositionX(),
+				this.pointer.getPositionY());
 		if (this.enemyShipSpecial != null)
 			drawManager.drawEntity(this.enemyShipSpecial,
 					this.enemyShipSpecial.getPositionX(),
@@ -370,8 +408,13 @@ public class GameScreen extends Screen {
 		for (Laser laser : this.lasers)
 			drawManager.drawEntity(laser, laser.getPositionX(),
 					laser.getPositionY());
+
+		for (UAShip uaShip : this.uaShips)
+			drawManager.drawEntity(uaShip, uaShip.getPositionX(),
+					uaShip.getPositionY());
 		// Interface.
 		drawManager.drawScore(this, this.score);
+		drawManager.drawUAShips(this, this.pointer.getUasnums());
 		drawManager.drawLives(this, this.lives);
 		drawManager.drawLasingCD(this, this.ship);
 		drawManager.drawShootCD(this, this.ship);
@@ -421,6 +464,18 @@ public class GameScreen extends Screen {
 		this.bullets.removeAll(recyclable);
 		BulletPool.recycle(recyclable);
 	}
+
+	private void cleanUaShips() {
+		Set<UAShip> recyclable = new HashSet<UAShip>();
+		for (UAShip u : this.uaShips) {
+			u.update();
+			if (u.getPositionX() < 0) {
+				recyclable.add(u);
+			}
+		}
+		this.uaShips.removeAll(recyclable);
+	}
+
 	private void cleanLasers() {
 		Set<Laser> recyclable = new HashSet<Laser>();
 		for (Laser laser : this.lasers) {
@@ -541,7 +596,55 @@ public class GameScreen extends Screen {
 					}
 				}
 	}
+	private void manageCollisions3() {
+		Set<UAShip> recyclable = new HashSet<UAShip>();
+		for (UAShip uaShip : this.uaShips){
+				for (EnemyShip enemyShip : this.enemyShipFormation)
+					if (!enemyShip.isDestroyed()
+							&& checkCollision3(uaShip, enemyShip)) {
+						SoundPlay.getInstance().play(SoundType.enemyKill);
+						this.score += enemyShip.getPointValue();
+						this.shipsDestroyed++;
 
+						if (enemyShip.getItemType() != null) {
+							enemyShip.itemDrop(itemiterator);
+							for (Item item : this.itemiterator)
+								if (item != null)
+									item.setSprite();
+						}
+						this.enemyShipFormation.destroy(enemyShip);
+						uaShip.collision();
+						if(uaShip.isDestroy())
+							recyclable.add(uaShip);
+					}
+				if (this.enemyShipSpecial != null
+						&& !this.enemyShipSpecial.isDestroyed()
+						&& checkCollision3(uaShip, this.enemyShipSpecial)) {
+					SoundPlay.getInstance().play(SoundType.bonusEnemyKill);
+					this.score += this.enemyShipSpecial.getPointValue();
+
+					this.shipsDestroyed++;
+					this.enemyShipSpecial.destroy();
+					this.enemyShipSpecialExplosionCooldown.reset();
+					uaShip.collision();
+					if(uaShip.isDestroy())
+						recyclable.add(uaShip);
+				}
+				if (this.enemyShipDangerous != null
+						&& !this.enemyShipDangerous.isDestroyed()
+						&& checkCollision3(uaShip, this.enemyShipDangerous)) {
+					SoundPlay.getInstance().play(SoundType.bonusEnemyKill);
+					this.score += this.enemyShipDangerous.getPointValue();
+					this.shipsDestroyed++;
+					this.enemyShipDangerous.destroy();
+					this.enemyShipdangerousExplosionCooldown.reset();
+					uaShip.collision();
+					if(uaShip.isDestroy())
+						recyclable.add(uaShip);
+				}
+			}
+		this.uaShips.removeAll(recyclable);
+	}
 	/**
 	 * Checks if two entities are colliding.
 	 * 
@@ -573,6 +676,20 @@ public class GameScreen extends Screen {
 		int distanceX = Math.abs(centerAX - centerBX);
 
 		return distanceX < maxDistanceX;
+	}
+	private boolean checkCollision3(final UAShip a, final Entity b) {
+		// Calculate center point of the entities in both axis.
+		int centerAX = a.getPositionX() + a.getWidth() / 2;
+		int centerAY = a.getPositionY() + a.getHeight() / 2;
+		int centerBX = b.getPositionX() + b.getWidth() / 2;
+		int centerBY = b.getPositionY() + b.getHeight() / 2;
+		// Calculate maximum distance without collision.
+		int maxDistanceX = a.getWidth() / 2 + b.getWidth() / 2;
+		int maxDistanceY = a.getHeight() / 2 + b.getHeight() / 2;
+		// Calculates distance.
+		int distanceX = Math.abs(centerAX - centerBX);
+		int distanceY = Math.abs(centerAY - centerBY);
+		return distanceX < maxDistanceX && distanceY < maxDistanceY;
 	}
 
 	/**

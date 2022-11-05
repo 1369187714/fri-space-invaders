@@ -9,11 +9,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
+import entity.*;
 import screen.GameScreen;
 import screen.Screen;
-import entity.Entity;
-import entity.Ship;
-import entity.Life;
 import sound.SoundPlay;
 
 /**
@@ -54,11 +52,13 @@ public final class DrawManager {
 	public static enum SpriteType {
 		/** Player ship. */
 		Ship,
+		Pointer,
 		/** Destroyed player ship. */
 		ShipDestroyed,
 		/** Player bullet. */
 		Bullet,
 		Laser,
+		UAShip,
 		/** Enemy bullet. */
 		EnemyBullet,
 		/** First enemy ship - first form. */
@@ -103,8 +103,10 @@ public final class DrawManager {
 			spriteMap = new LinkedHashMap<SpriteType, boolean[][]>();
 
 			spriteMap.put(SpriteType.Ship, new boolean[13][8]);
+			spriteMap.put(SpriteType.Pointer, new boolean[3][5]);
 			spriteMap.put(SpriteType.ShipDestroyed, new boolean[13][8]);
 			spriteMap.put(SpriteType.Bullet, new boolean[3][5]);
+			spriteMap.put(SpriteType.UAShip, new boolean[9][9]);
 			spriteMap.put(SpriteType.Laser, new boolean[5][156]);
 			spriteMap.put(SpriteType.EnemyBullet, new boolean[3][5]);
 			spriteMap.put(SpriteType.EnemyShipA1, new boolean[12][8]);
@@ -278,6 +280,13 @@ public final class DrawManager {
 		Life remainLife = new Life(0, 0);
 		for (int i = 0; i < lives; i++)
 			drawEntity(remainLife, 45 + 30 * i, 6);
+	}
+
+	public void drawUAShips(final Screen screen, final int uasnums) {
+		UAShip uaShip = new UAShip(0, 0);
+		backBufferGraphics.setColor(Color.PINK);
+		for (int i = 0; i < uasnums; i++)
+			drawEntity(uaShip, 400 - 23 * i, 9);
 	}
 
 	public void drawShootCD(final Screen screen, final Ship ship) {
