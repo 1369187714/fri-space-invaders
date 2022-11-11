@@ -719,6 +719,10 @@ public final class DrawManager {
 		String right = "right:  >   (right arrow)";
 		String left = "left:  <   (left arrow)";
 		String shoot = "shoot:   spacebar";
+		String keyQ = "Q:skill release laser";
+		String PressUP = "Press UP:pointer to move up (aim)";
+		String ReleaseUP = "Release UP:drone launch";
+
 		String spaceBar = "Press Space to return"; // 뒤로 가기
 		String pageKey = "Press Number key to page"; // 페이지 변경
 		
@@ -763,6 +767,12 @@ public final class DrawManager {
 				drawCenteredRegularString(screen, left, screen.getHeight() / 3 + 40);
 				backBufferGraphics.setColor(Color.WHITE);
 				drawCenteredRegularString(screen, shoot, screen.getHeight() / 3 + 60);
+				backBufferGraphics.setColor(Color.WHITE);
+				drawCenteredRegularString(screen, keyQ, screen.getHeight() / 3 + 80);
+				backBufferGraphics.setColor(Color.WHITE);
+				drawCenteredRegularString(screen, PressUP, screen.getHeight() / 3 + 100);
+				backBufferGraphics.setColor(Color.WHITE);
+				drawCenteredRegularString(screen, ReleaseUP, screen.getHeight() / 3 + 120);
 				
 							
 				

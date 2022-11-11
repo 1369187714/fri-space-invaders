@@ -1,9 +1,9 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Run" type="Application" factoryName="Application">
-    <option name="ALTERNATIVE_JRE_PATH" value="openjdk-19" />
+    <option name="ALTERNATIVE_JRE_PATH" value="openjdk-19 (2)" />
     <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
     <option name="MAIN_CLASS_NAME" value="engine.Core" />
-    <module name="9.Level-Design-System" />
+    <module name="fri-space-invaders" />
     <method v="2">
       <option name="Make" enabled="true" />
     </method>
