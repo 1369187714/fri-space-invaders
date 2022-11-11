@@ -716,12 +716,12 @@ public final class DrawManager {
 	}
 	public void drawHelpMenu(final Screen screen, final int page) {
 		String helpString = "HELP";
-		String right = "right:  >   (right arrow)";
-		String left = "left:  <   (left arrow)";
-		String shoot = "shoot:   spacebar";
-		String keyQ = "Q:skill release laser";
-		String PressUP = "Press UP:pointer to move up (aim)";
-		String ReleaseUP = "Release UP:drone launch";
+		String right = "move right:  >   (right arrow)";
+		String left = "move left:  <   (left arrow)";
+		String shoot = "shoot:  spacebar";
+		String keyQ = "lasing:  q";
+		String PressUP = "pointer move up:  press up";
+		String ReleaseUP = "launch uaship:  release up";
 
 		String spaceBar = "Press Space to return"; // 뒤로 가기
 		String pageKey = "Press Number key to page"; // 페이지 변경
