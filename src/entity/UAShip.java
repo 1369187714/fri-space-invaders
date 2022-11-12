@@ -10,7 +10,7 @@ public class UAShip extends Entity {
 
     public UAShip(final int positionX, final int positionY) {
         super(positionX, positionY, 9 * 2, 9 * 2, Color.PINK);
-        this.HP = 2;
+        this.HP = 3;
         this.speed = -6;
         setSprite();
     }

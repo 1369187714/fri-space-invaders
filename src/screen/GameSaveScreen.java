@@ -36,6 +36,7 @@ public class GameSaveScreen extends Screen {
 
         this.score = gameState.getScore();
         this.lives = gameState.getLivesRemaining();
+        this.uasnums = FileManager.getUasnums();
 
         // Defaults to play.
         this.returnCode = 1;
@@ -94,6 +95,7 @@ public class GameSaveScreen extends Screen {
 
         drawManager.drawScore(this, this.score);
         drawManager.drawLives(this, this.lives);
+        drawManager.drawUAShips(this, this.uasnums);
         drawManager.drawHorizontalLine(this, 39);
 
         drawManager.drawCenteredBigString(this, "Stage clear", this.getHeight() / 3);
