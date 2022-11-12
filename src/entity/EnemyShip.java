@@ -30,6 +30,8 @@ public class EnemyShip extends Entity {
 	private static final int C_TYPE_POINTS = 30;
 	/** Point value of a bonus enemy. */
 	private static final int BONUS_TYPE_POINTS = 100;
+
+	private static final int boss_TYPE_POINTS = 200;
 	/** Cooldown between sprite changes. */
 	private Cooldown animationCooldown;
 	/** Checks if the ship has been hit by a bullet. */
@@ -80,7 +82,7 @@ public class EnemyShip extends Entity {
 			this.pointValue = C_TYPE_POINTS;
 			break;
 		default:
-			this.pointValue = 0;
+			this.pointValue = boss_TYPE_POINTS;
 			break;
 
 
@@ -131,7 +133,7 @@ public class EnemyShip extends Entity {
 	public EnemyShip (Color color) {
 		super(-32,60,16*2,7*2, color);
 
-		this.spriteType = SpriteType.EnemyShipSpecial;
+		this.spriteType = SpriteType.EnemyShipDangerous;
 		this.isDestroyed = false;
 		this.pointValue = BONUS_TYPE_POINTS;
 	}

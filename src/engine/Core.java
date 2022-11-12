@@ -48,28 +48,27 @@ public final class Core {
 	/** Difficulty settings for level 1. */
 	private static final GameSettings SETTINGS_LEVEL_1 =
 
-			new GameSettings(1, 5, 4, 60, 2000);
+			new GameSettings(1, 4, 3, 30, 1600);
 	/** Difficulty settings for level 2. */
 	private static final GameSettings SETTINGS_LEVEL_2 =
-			new GameSettings(2, 5, 5, 50, 2500);
+			new GameSettings(2, 4, 4, 25, 1400);
 	/** Difficulty settings for level 3. */
 	private static final GameSettings SETTINGS_LEVEL_3 =
-			new GameSettings(3, 6, 5, 40, 1500);
+			new GameSettings(3, 5, 5, 20, 1100);
 	/** Difficulty settings for level 4. */
 	private static final GameSettings SETTINGS_LEVEL_4 =
-			new GameSettings(4, 6, 6, 30, 1500);
+			new GameSettings(4, 5, 6, 10, 800);
 	/** Difficulty settings for level 5. */
 	private static final GameSettings SETTINGS_LEVEL_5 =
-			new GameSettings(5, 7, 6, 20, 1000);
+			new GameSettings(5, 6, 7, 20, 700);
 	/** Difficulty settings for level 6. */
 	private static final GameSettings SETTINGS_LEVEL_6 =
-			new GameSettings(6, 7, 7, 10, 1000);
+			new GameSettings(6, 7, 7, 10, 600);
 	/** Difficulty settings for level 7. */
 	private static final GameSettings SETTINGS_LEVEL_7 =
-			new GameSettings(7,7, 8, 5, 500);
-
+			new GameSettings(7, 7, 8, 5, 500);
 	/** add boss stage **/
-	private static final GameSettings SETTINGS_Boss_Stage=
+	private static final GameSettings SETTINGS_boss_Stage =
 			new GameSettings(8, 3,3, 0, 200);
 
 	/** Frame to draw the screen on. */
@@ -118,14 +117,15 @@ public final class Core {
 		int height = frame.getHeight();
 
 		gameSettings = new ArrayList<GameSettings>();
-		gameSettings.add(SETTINGS_LEVEL_1);
+		gameSettings.add(SETTINGS_boss_Stage);
 		gameSettings.add(SETTINGS_LEVEL_2);
 		gameSettings.add(SETTINGS_LEVEL_3);
 		gameSettings.add(SETTINGS_LEVEL_4);
 		gameSettings.add(SETTINGS_LEVEL_5);
+		gameSettings.add(SETTINGS_boss_Stage);
 		gameSettings.add(SETTINGS_LEVEL_6);
 		gameSettings.add(SETTINGS_LEVEL_7);
-		gameSettings.add(SETTINGS_Boss_Stage);
+
 
 		GameState gameState;
 		PermanentState permanentState = PermanentState.getInstance();

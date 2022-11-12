@@ -76,7 +76,7 @@ public final class DrawManager {
 		/** Bonus ship. */
 		EnemyShipSpecial,
 		/** Destroyed enemy ship. */
-		EnemyShipdangerous,
+		EnemyShipDangerous,
 
 		Explosion,
 		/** dropped item */
@@ -87,7 +87,9 @@ public final class DrawManager {
 		Shield,
     
     /** Life shape */
-		Life
+		Life,
+
+		boss
 
 	};
 
@@ -121,7 +123,8 @@ public final class DrawManager {
 			spriteMap.put(SpriteType.ItemGet, new boolean[5][5]);
 			spriteMap.put(SpriteType.Shield, new boolean[13][1]);
 			spriteMap.put(SpriteType.Life, new boolean[13][13]);
-			spriteMap.put(SpriteType.EnemyShipdangerous, new boolean[16][7]);
+			spriteMap.put(SpriteType.EnemyShipDangerous, new boolean[16][7]);
+			spriteMap.put(SpriteType.boss, new boolean[15][9]);
 
 			fileManager.readship();//read ship파일
 			fileManager.loadSprite(spriteMap);

@@ -225,7 +225,7 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 			Current_Level = gameSettings.getLevel();
 			for (int i = 0; i < this.nShipsHigh; i++) {
 				if (gameSettings.getLevel() == 8)
-					spriteType = SpriteType.EnemyShipSpecial;
+					spriteType = SpriteType.boss;
 				else if (i / (float) this.nShipsHigh < PROPORTION_C)
 					spriteType = SpriteType.EnemyShipC1;
 				else if (i / (float) this.nShipsHigh < PROPORTION_B
