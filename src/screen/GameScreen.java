@@ -340,7 +340,7 @@ public class GameScreen extends Screen {
 				manageGetItem(item);
 			}
 		}
-		manageCollisions3();
+		manageCollisions_uaship();
 		manageCollisions();
 		manageCollisions_lasing();
 		cleanItems();
@@ -596,12 +596,12 @@ public class GameScreen extends Screen {
 					}
 				}
 	}
-	private void manageCollisions3() {
+	private void manageCollisions_uaship() {
 		Set<UAShip> recyclable = new HashSet<UAShip>();
 		for (UAShip uaShip : this.uaShips){
 				for (EnemyShip enemyShip : this.enemyShipFormation)
 					if (!enemyShip.isDestroyed()
-							&& checkCollision3(uaShip, enemyShip)) {
+							&& checkCollision_uaship(uaShip, enemyShip)) {
 						SoundPlay.getInstance().play(SoundType.enemyKill);
 						this.score += enemyShip.getPointValue();
 						this.shipsDestroyed++;
@@ -619,7 +619,7 @@ public class GameScreen extends Screen {
 					}
 				if (this.enemyShipSpecial != null
 						&& !this.enemyShipSpecial.isDestroyed()
-						&& checkCollision3(uaShip, this.enemyShipSpecial)) {
+						&& checkCollision_uaship(uaShip, this.enemyShipSpecial)) {
 					SoundPlay.getInstance().play(SoundType.bonusEnemyKill);
 					this.score += this.enemyShipSpecial.getPointValue();
 
@@ -632,7 +632,7 @@ public class GameScreen extends Screen {
 				}
 				if (this.enemyShipDangerous != null
 						&& !this.enemyShipDangerous.isDestroyed()
-						&& checkCollision3(uaShip, this.enemyShipDangerous)) {
+						&& checkCollision_uaship(uaShip, this.enemyShipDangerous)) {
 					SoundPlay.getInstance().play(SoundType.bonusEnemyKill);
 					this.score += this.enemyShipDangerous.getPointValue();
 					this.shipsDestroyed++;
@@ -677,7 +677,7 @@ public class GameScreen extends Screen {
 
 		return distanceX < maxDistanceX;
 	}
-	private boolean checkCollision3(final UAShip a, final Entity b) {
+	private boolean checkCollision_uaship(final UAShip a, final Entity b) {
 		// Calculate center point of the entities in both axis.
 		int centerAX = a.getPositionX() + a.getWidth() / 2;
 		int centerAY = a.getPositionY() + a.getHeight() / 2;
