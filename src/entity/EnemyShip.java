@@ -171,26 +171,32 @@ public class EnemyShip extends Entity {
 			this.animationCooldown.reset();
 
 			switch (this.spriteType) {
-			case EnemyShipA1:
-				this.spriteType = SpriteType.EnemyShipA2;
-				break;
-			case EnemyShipA2:
-				this.spriteType = SpriteType.EnemyShipA1;
-				break;
-			case EnemyShipB1:
-				this.spriteType = SpriteType.EnemyShipB2;
-				break;
-			case EnemyShipB2:
-				this.spriteType = SpriteType.EnemyShipB1;
-				break;
-			case EnemyShipC1:
-				this.spriteType = SpriteType.EnemyShipC2;
-				break;
-			case EnemyShipC2:
-				this.spriteType = SpriteType.EnemyShipC1;
-				break;
-			default:
-				break;
+				case EnemyShipA1:
+					this.spriteType = SpriteType.EnemyShipA2;
+					break;
+				case EnemyShipA2:
+					this.spriteType = SpriteType.EnemyShipA1;
+					break;
+				case EnemyShipB1:
+					this.spriteType = SpriteType.EnemyShipB2;
+					break;
+				case EnemyShipB2:
+					this.spriteType = SpriteType.EnemyShipB1;
+					break;
+				case EnemyShipC1:
+					this.spriteType = SpriteType.EnemyShipC2;
+					break;
+				case EnemyShipC2:
+					this.spriteType = SpriteType.EnemyShipC1;
+					break;
+				case BOSS1:
+					this.spriteType = SpriteType.BOSS2;
+					break;
+				case BOSS2:
+					this.spriteType = SpriteType.BOSS1;
+					break;
+				default:
+					break;
 			}
 		}
 	}

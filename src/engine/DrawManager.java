@@ -89,7 +89,11 @@ public final class DrawManager {
     /** Life shape */
 		Life,
 
-		boss
+		boss,
+
+		BOSS1,
+
+		BOSS2
 
 	};
 
@@ -125,6 +129,8 @@ public final class DrawManager {
 			spriteMap.put(SpriteType.Life, new boolean[13][13]);
 			spriteMap.put(SpriteType.EnemyShipDangerous, new boolean[16][7]);
 			spriteMap.put(SpriteType.boss, new boolean[15][9]);
+			spriteMap.put(SpriteType.BOSS1, new boolean[12][13]);
+			spriteMap.put(SpriteType.BOSS2, new boolean[12][13]);
 
 			fileManager.readship();//read ship파일
 			fileManager.loadSprite(spriteMap);
@@ -1058,7 +1064,7 @@ public final class DrawManager {
 		backBufferGraphics.setColor(Color.GREEN);
 		if (number >= 4)
 			if (!bonusLife) {
-				if (level == 8){
+				if (level == 9){
 					drawCenteredBigString(screen, "Boss Stage",
 							screen.getHeight() / 2
 									+ fontBigMetrics.getHeight() / 3);

@@ -42,7 +42,7 @@ public final class Core {
 	/** Levels between extra life. */
 	private static final int EXTRA_LIFE_FRECUENCY = 3;
 	/** Total number of levels. */
-	private static final int NUM_LEVELS = 8;
+	private static final int NUM_LEVELS = 9;
 	/** Check click on Save & Exit button */
 	private static boolean GO_MAIN;
 	/** Difficulty settings for level 1. */
@@ -69,7 +69,10 @@ public final class Core {
 			new GameSettings(7, 7, 8, 5, 500);
 	/** add boss stage **/
 	private static final GameSettings SETTINGS_boss_Stage =
-			new GameSettings(8, 3,3, 0, 200);
+			new GameSettings(8, 3, 3, 0, 100);
+
+	private static final GameSettings SETTINGS_BOSS_Stage =
+			new GameSettings(9, 5, 5, 1, 200);
 
 	/** Frame to draw the screen on. */
 	private static Frame frame;
@@ -122,9 +125,10 @@ public final class Core {
 		gameSettings.add(SETTINGS_LEVEL_3);
 		gameSettings.add(SETTINGS_LEVEL_4);
 		gameSettings.add(SETTINGS_LEVEL_5);
-		gameSettings.add(SETTINGS_boss_Stage);
+		gameSettings.add(SETTINGS_BOSS_Stage);
 		gameSettings.add(SETTINGS_LEVEL_6);
 		gameSettings.add(SETTINGS_LEVEL_7);
+		gameSettings.add(SETTINGS_boss_Stage);
 
 
 		GameState gameState;

@@ -226,6 +226,8 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 			for (int i = 0; i < this.nShipsHigh; i++) {
 				if (gameSettings.getLevel() == 8)
 					spriteType = SpriteType.boss;
+				else if (gameSettings.getLevel() == 9)
+					spriteType = SpriteType.BOSS1;
 				else if (i / (float) this.nShipsHigh < PROPORTION_C)
 					spriteType = SpriteType.EnemyShipC1;
 				else if (i / (float) this.nShipsHigh < PROPORTION_B
@@ -334,7 +336,7 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 					}
 			} else if (currentDirection == Direction.LEFT) {
 				if (isAtLeftSide)
-					if (!isAtBottom && Current_Level != 8) {
+					if (!isAtBottom && Current_Level != 8 && Current_Level != 9) {
 						previousDirection = currentDirection;
 						currentDirection = Direction.DOWN;
 						this.logger.info("Formation now moving down 3");
@@ -345,7 +347,7 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 					}
 			} else {
 				if (isAtRightSide)
-					if (!isAtBottom && Current_Level != 8) {
+					if (!isAtBottom && Current_Level != 8 && Current_Level != 9) {
 						previousDirection = currentDirection;
 						currentDirection = Direction.DOWN;
 						this.logger.info("Formation now moving down 5");
@@ -391,7 +393,7 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 			for (List<EnemyShip> column : this.enemyShips) {
 
 				for (EnemyShip enemyShip : column) {
-					if (Current_Level == 8) {
+					if (Current_Level == 8 || Current_Level == 9) {
 						if (inverse == 0) {
 							movementY = SPEED_CONTROL;
 
@@ -475,6 +477,14 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 					this.shootingCooldown.reset();
 					bullets.add(BulletPool.getBullet(shooter.getPositionX()
 							+ shooter.width / 2, shooter.getPositionY(), Current_Level + 3));
+				}
+				break;
+			case BOSS1:
+			case BOSS2:
+				if (this.shootingCooldown.checkFinished()) {
+					this.shootingCooldown.reset();
+					bullets.add(BulletPool.getBullet(shooter.getPositionX()
+							+ shooter.width / 2, shooter.getPositionY(), 2));
 				}
 				break;
 			default:
