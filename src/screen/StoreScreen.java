@@ -19,7 +19,7 @@ public class StoreScreen extends Screen {
     private static final int COST_COLOR = 100;
     private static final int COST_BULLET = 100;
     private static final int COST_BGM = 100;
-    private static final int COST_DRONES = 100;
+    private static final int COST_UAS = 100;
 
 
     /** Time between changes in user selection. */
@@ -170,12 +170,12 @@ public class StoreScreen extends Screen {
                 permanentState.setCoin(-COST_BGM);
             }
         } else if (menuCode == 4) { // uaship
-            if (permanentState.getCoin() >= COST_DRONES) {
+            if (permanentState.getCoin() >= COST_UAS) {
                 if(permanentState.getUAShip()<6){
                     int x = permanentState.getUAShip()+1;
                     permanentState.setUAShip(x);
                     FileManager.setUaShipNum(true);
-                    permanentState.setCoin(-COST_DRONES);
+                    permanentState.setCoin(-COST_UAS);
                 }
             }
         }else {

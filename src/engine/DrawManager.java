@@ -922,6 +922,8 @@ public final class DrawManager {
 		String BGMString = "BGM";
 		String exitString = "exit";
 		String UAShipString = "uaship";
+		if(fileManager.getUasnums() == 6)
+			UAShipString = "uaship(max)";
 
 
 		if (menu == 0 && focus == 0)
