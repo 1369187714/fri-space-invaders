@@ -13,5 +13,6 @@ public enum SoundType{
     roundCounting,
     menuClick,
     bonusEnemyKill,
-    roundClear
+    roundClear,
+    launch
 }

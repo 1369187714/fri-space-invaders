@@ -7,6 +7,8 @@ import engine.Cooldown;
 import engine.DrawManager.SpriteType;
 import engine.Core;
 import engine.FileManager;
+import sound.SoundPlay;
+import sound.SoundType;
 
 
 public class Pointer extends Entity {
@@ -42,7 +44,7 @@ public class Pointer extends Entity {
             this.launchingCooldown.reset();
             this.uasnums--;
             uaShips.add(BulletPool.getUAShip(positionX + this.width / 2, positionY - 6));
-//            SoundPlay.getInstance().play(SoundType.shoot);
+            SoundPlay.getInstance().play(SoundType.launch);
         }
     }
     public final void update() {
