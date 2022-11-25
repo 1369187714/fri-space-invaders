@@ -31,7 +31,7 @@ public final class PermanentState {
 	 * Current bullet sound effect.
 	 */
 	private int bulletSFX = 1;
-	private int UpShip = FileManager.getUasnums();
+	private int UAShip = FileManager.getUasnums();
 	/**
 	 * Application logger.
 	 */
@@ -98,11 +98,11 @@ public final class PermanentState {
 		this.bulletSFX = sfx;
 	}
 
-	public int getUpShip() {
-		return UpShip;
+	public int getUAShip() {
+		return UAShip;
 	}
 
-	public void setUpShip(int upship) {
-		this.UpShip = upship;
+	public void setUAShip(int uaship) {
+		this.UAShip = uaship;
 	}
 }

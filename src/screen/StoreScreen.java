@@ -169,14 +169,11 @@ public class StoreScreen extends Screen {
                 permanentState.setBGM(x);
                 permanentState.setCoin(-COST_BGM);
             }
-        } else if (menuCode == 4) { // Drones
+        } else if (menuCode == 4) { // uaship
             if (permanentState.getCoin() >= COST_DRONES) {
-                /*int x = new Random().nextInt(3) + 1;
-                while (permanentState.getUpShip() == x)
-                    x = new Random().nextInt(3) + 1;*/
-                if(permanentState.getUpShip()<6){
-                    int x = permanentState.getUpShip()+1;
-                    permanentState.setUpShip(x);
+                if(permanentState.getUAShip()<6){
+                    int x = permanentState.getUAShip()+1;
+                    permanentState.setUAShip(x);
                     FileManager.setUaShipNum(true);
                     permanentState.setCoin(-COST_DRONES);
                 }

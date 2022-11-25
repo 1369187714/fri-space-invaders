@@ -921,7 +921,7 @@ public final class DrawManager {
 		String bulletEffectString = "bullet effect";
 		String BGMString = "BGM";
 		String exitString = "exit";
-		String UpShipString = "upship";
+		String UAShipString = "uaship";
 
 
 		if (menu == 0 && focus == 0)
@@ -952,7 +952,7 @@ public final class DrawManager {
 			backBufferGraphics.setColor(Color.GREEN);
 		else
 			backBufferGraphics.setColor(Color.WHITE);
-		backBufferGraphics.drawString(UpShipString, screen.getWidth() / 2 - 170,
+		backBufferGraphics.drawString(UAShipString, screen.getWidth() / 2 - 170,
 				screen.getHeight() / 2 + fontRegularMetrics.getHeight() * 8);
 
 		if (menu == 5 && focus == 0)
@@ -964,7 +964,7 @@ public final class DrawManager {
 	}
 
 	public void drawStoreGacha(final Screen screen, final int menu, final int focus) {
-		String rerollString = "random or purchase(100$)";
+		String rerollString = "SPEND(500$)";
 		String buyString = null;
 		String coinLackString = "Not enough coins!";
 
@@ -1010,7 +1010,7 @@ public final class DrawManager {
 			backBufferGraphics.setFont(fontRegular);
 		} else if (menu == 4) { // drones
 			backBufferGraphics.setFont(fontBig);
-			backBufferGraphics.drawString(Integer.toString(permanentState.getUpShip()), screen.getWidth() / 2 + 96, screen.getHeight() / 2 + 60);
+			backBufferGraphics.drawString(Integer.toString(permanentState.getUAShip()), screen.getWidth() / 2 + 96, screen.getHeight() / 2 + 60);
 			backBufferGraphics.setFont(fontRegular);
 		}
 	}
