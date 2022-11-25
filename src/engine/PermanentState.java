@@ -11,17 +11,30 @@ import java.util.logging.Logger;
  */
 public final class PermanentState {
 
-	/** Money used in game. */
+	/**
+	 * Money used in game.
+	 */
 	private static int coin = 0;
-	/** Current ship shape. */
+	/**
+	 * Current ship shape.
+	 */
 	private int shipShape = FileManager.getPlayerShipShape();
-	/** Current ship color. */
+	/**
+	 * Current ship color.
+	 */
 	private int shipColor = FileManager.getPlayerShipColor();
-	/** Current background Music. */
+	/**
+	 * Current background Music.
+	 */
 	private int BGM = 1;
-	/** Current bullet sound effect. */
+	/**
+	 * Current bullet sound effect.
+	 */
 	private int bulletSFX = 1;
-	/** Application logger. */
+	private int UpShip = FileManager.getUasnums();
+	/**
+	 * Application logger.
+	 */
 	private static Logger logger;
 
 	private static PermanentState ps;
@@ -34,7 +47,7 @@ public final class PermanentState {
 		}
 	}
 
-	public static PermanentState getInstance(){
+	public static PermanentState getInstance() {
 		if (ps == null)
 			ps = new PermanentState();
 		return ps;
@@ -65,17 +78,31 @@ public final class PermanentState {
 		return shipColor;
 	}
 
-	public void setShipColor(int color) { this.shipColor = color; }
+	public void setShipColor(int color) {
+		this.shipColor = color;
+	}
 
 	public int getBGM() {
 		return BGM;
 	}
 
-	public void setBGM(int bgm) { this.BGM = bgm; }
+	public void setBGM(int bgm) {
+		this.BGM = bgm;
+	}
 
 	public int getBulletSFX() {
 		return bulletSFX;
 	}
 
-	public void setBulletSFX(int sfx) { this.bulletSFX = sfx; }
+	public void setBulletSFX(int sfx) {
+		this.bulletSFX = sfx;
+	}
+
+	public int getUpShip() {
+		return UpShip;
+	}
+
+	public void setUpShip(int upship) {
+		this.UpShip = upship;
+	}
 }

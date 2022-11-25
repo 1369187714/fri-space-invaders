@@ -5,6 +5,7 @@ import java.util.Random;
 
 import engine.Cooldown;
 import engine.Core;
+import engine.FileManager;
 import engine.PermanentState;
 import sound.SoundPlay;
 import sound.SoundType;
@@ -18,6 +19,8 @@ public class StoreScreen extends Screen {
     private static final int COST_COLOR = 100;
     private static final int COST_BULLET = 100;
     private static final int COST_BGM = 100;
+    private static final int COST_DRONES = 100;
+
 
     /** Time between changes in user selection. */
     private Cooldown selectionCooldown;
@@ -80,16 +83,16 @@ public class StoreScreen extends Screen {
             }
             if (inputManager.isKeyDown(KeyEvent.VK_RIGHT) // 뽑기 버튼으로 가기
                     || inputManager.isKeyDown(KeyEvent.VK_D)) {
-                if (menuCode != 4) focusReroll = 1;
+                if (menuCode != 5) focusReroll = 1;
                 this.selectionCooldown.reset();
             }
             if (inputManager.isKeyDown(KeyEvent.VK_LEFT) // 메뉴 선택으로 되돌아가기
                     || inputManager.isKeyDown(KeyEvent.VK_A)) {
-                if (menuCode != 4) focusReroll = 0;
+                if (menuCode != 5) focusReroll = 0;
                 this.selectionCooldown.reset();
             }
             if (inputManager.isKeyDown(KeyEvent.VK_SPACE)){
-                if (menuCode == 4)
+                if (menuCode == 5)
                     this.isRunning = false;
                 else {
                     if (focusReroll == 0)
@@ -104,11 +107,13 @@ public class StoreScreen extends Screen {
         }
     }
 
+
+
     /**
      * Shifts the focus to the next menu item.
      */
     private void nextMenuItem() {
-        if (menuCode == 4)
+        if (menuCode == 5)
             menuCode = 0;
         else
             menuCode++;
@@ -120,7 +125,7 @@ public class StoreScreen extends Screen {
      */
     private void previousMenuItem() {
         if (menuCode == 0)
-            menuCode = 4;
+            menuCode = 5;
         else
             menuCode--;
         soundPlay.play(SoundType.menuSelect);
@@ -156,8 +161,7 @@ public class StoreScreen extends Screen {
                 permanentState.setBulletSFX(x);
                 permanentState.setCoin(-COST_BULLET);
             }
-        }
-        else { // BGM
+        }else if (menuCode == 3) { // BGM
             if (permanentState.getCoin() >= COST_BGM) {
                 int x = new Random().nextInt(3) + 1;
                 while (permanentState.getBGM() == x)
@@ -165,6 +169,20 @@ public class StoreScreen extends Screen {
                 permanentState.setBGM(x);
                 permanentState.setCoin(-COST_BGM);
             }
+        } else if (menuCode == 4) { // Drones
+            if (permanentState.getCoin() >= COST_DRONES) {
+                /*int x = new Random().nextInt(3) + 1;
+                while (permanentState.getUpShip() == x)
+                    x = new Random().nextInt(3) + 1;*/
+                if(permanentState.getUpShip()<6){
+                    int x = permanentState.getUpShip()+1;
+                    permanentState.setUpShip(x);
+                    FileManager.setUaShipNum(true);
+                    permanentState.setCoin(-COST_DRONES);
+                }
+            }
+        }else {
+            logger.info("error menu code");
         }
     }
 
@@ -176,7 +194,7 @@ public class StoreScreen extends Screen {
 
         drawManager.drawStoreTitle(this);
         drawManager.drawStoreMenu(this, menuCode, focusReroll);
-        if (menuCode < 4)
+        if (menuCode < 5)
             drawManager.drawStoreGacha(this, menuCode, focusReroll);
         drawManager.drawCoin(this, permanentState.getCoin());
 
