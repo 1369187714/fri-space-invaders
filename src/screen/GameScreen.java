@@ -416,7 +416,9 @@ public class GameScreen extends Screen {
 		drawManager.drawScore(this, this.score);
 		drawManager.drawUAShips(this, this.pointer.getUasnums());
 		drawManager.drawLives(this, this.lives);
-		drawManager.drawLasingCD(this, this.ship);
+		int playerShipShape = FileManager.getPlayerShipShape();
+		if(playerShipShape == 2)
+			drawManager.drawLasingCD(this, this.ship);
 		drawManager.drawShootCD(this, this.ship);
 		drawManager.drawHorizontalLine(this, SEPARATION_LINE_HEIGHT - 1);
 

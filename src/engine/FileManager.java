@@ -28,7 +28,7 @@ public final class FileManager {
 	/** Max number of high scores. */
 	private static final int MAX_SCORES = 7;
 
-	private static int playerShipShape,playerShipColor;
+	private static int playerShipShape,playerShipColor,playerUasnums;
 
 	private static int uasnums;
 
@@ -482,12 +482,14 @@ public final class FileManager {
 		FileReader fileReader = new FileReader("res/ship");
 		fileReader.read();
 		int ColorNum = fileReader.read();
+		int usn = fileReader.read();
 		fileReader.close();
 		FileWriter fileWriter = new FileWriter("res/ship");
 		PrintWriter printWriter = new PrintWriter(fileWriter);
 		printWriter.print(shipShape+1);
 		playerShipShape = shipShape;
 		printWriter.print(ColorNum - 48);
+		printWriter.print(usn - 48);
 		fileWriter.close();
 	}
 
@@ -525,11 +527,14 @@ public final class FileManager {
 		try {
 			FileReader fileReader = new FileReader("res/ship");
 			int shapeNum = fileReader.read();
+			fileReader.read();
+			int usn = fileReader.read();
 			fileReader.close();
 			FileWriter fileWriter = new FileWriter("res/ship");
 			PrintWriter printWriter = new PrintWriter(fileWriter);
 			printWriter.print(shapeNum - 48);
 			printWriter.print(shipColor+1);
+			printWriter.print(usn - 48);
 			playerShipColor = shipColor;
 			fileWriter.close();
 		} catch (IOException e) {
