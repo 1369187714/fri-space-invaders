@@ -173,7 +173,6 @@ public class StoreScreen extends Screen {
             if (permanentState.getCoin() >= COST_UAS) {
                 if(permanentState.getUAShip()<6){
                     int x = permanentState.getUAShip()+1;
-                    permanentState.setUAShip(x);
                     FileManager.setUaShipNum(true);
                     permanentState.setCoin(-COST_UAS);
                 }
