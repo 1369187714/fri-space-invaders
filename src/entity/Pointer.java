@@ -34,10 +34,6 @@ public class Pointer extends Entity {
     {
         this.positionY -= SPEED;
     }
-    public final void moveDown()
-    {
-        this.positionY += SPEED;
-    }
     public final void launch(final Set<UAShip> uaShips) {
         if (this.launchingCooldown.checkFinished() && this.uasnums > 0) {
             FileManager.setUaShipNum(false);
@@ -53,8 +49,11 @@ public class Pointer extends Entity {
     public int getUasnums() {
         return uasnums;
     }
-    public void resetXY() {
+    public void resetPosition() {
         this.positionY = defaultY;
         this.positionX = defaultX;
+    }
+    public double getSpeed(){
+        return SPEED;
     }
 }

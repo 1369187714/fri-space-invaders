@@ -285,7 +285,7 @@ public class GameScreen extends Screen {
 
 			if (canLaunch) {
 				this.pointer.launch(this.uaShips);
-				pointer.resetXY();
+				pointer.resetPosition();
 				canLaunch = false;
 			}
 
